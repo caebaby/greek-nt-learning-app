@@ -1,17 +1,12 @@
 {
   "name": "greek-nt-learning-app",
   "version": "1.0.0",
-  "description": "NT Greek Learning App with Biblingo Integration and Spaced Repetition",
+  "description": "NT Greek Learning App",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server $PORT --bind 0.0.0.0",
-    "dev": "python3 -m http.server 8080 --bind 0.0.0.0"
+    "start": "npx serve . -p $PORT"
   },
-  "keywords": ["greek", "learning", "new-testament", "spaced-repetition", "biblingo"],
-  "author": "caebaby",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/caebaby/greek-nt-learning-app.git"
+  "dependencies": {
+    "serve": "^14.2.1"
   }
 }
