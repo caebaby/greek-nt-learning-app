@@ -452,6 +452,125 @@
             color: #c62828;
         }
 
+        /* Memory Management Styles */
+        .memory-management {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8ff 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #c8e6c9;
+        }
+
+        .memory-management h3 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .storage-info {
+            background: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .storage-info h4 {
+            color: #1b5e20;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .storage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .storage-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .storage-stat:last-child {
+            border-bottom: none;
+        }
+
+        .storage-stat span:first-child {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .storage-stat span:last-child {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .memory-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .memory-controls .control-btn {
+            flex: 1;
+            min-width: 120px;
+            max-width: 150px;
+        }
+
+        .auto-save-status {
+            text-align: center;
+            padding: 10px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.saving {
+            background: #ff9800;
+        }
+
+        .status-dot.error {
+            background: #f44336;
+            animation: none;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        #save-status-text {
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .auto-save-status small {
+            color: #666;
+            font-size: 12px;
+        }
+
         .hidden {
             display: none;
         }
@@ -472,6 +591,18 @@
             
             .control-btn {
                 width: 100%;
+            }
+
+            .storage-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .memory-controls {
+                flex-direction: column;
+            }
+            
+            .memory-controls .control-btn {
+                max-width: none;
             }
         }
     </style>
@@ -634,6 +765,53 @@
                 <div id="mistake-list"></div>
             </div>
         </div>
+
+        <!-- Memory Management Section -->
+        <div class="memory-management">
+            <h3>💾 Progress Management</h3>
+            
+            <div class="storage-info">
+                <h4>Storage Status:</h4>
+                <div class="storage-stats" id="storage-stats">
+                    <div class="storage-stat">
+                        <span>Vocabulary Words:</span>
+                        <span id="vocab-count">0</span>
+                    </div>
+                    <div class="storage-stat">
+                        <span>Paradigms:</span>
+                        <span id="paradigm-count">0</span>
+                    </div>
+                    <div class="storage-stat">
+                        <span>Total Questions:</span>
+                        <span id="total-questions">0</span>
+                    </div>
+                    <div class="storage-stat">
+                        <span>Last Saved:</span>
+                        <span id="last-saved">Never</span>
+                    </div>
+                    <div class="storage-stat">
+                        <span>Data Size:</span>
+                        <span id="data-size">0 KB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="memory-controls">
+                <button class="control-btn primary-btn" onclick="saveDataManually()">💾 Save Now</button>
+                <button class="control-btn secondary-btn" onclick="exportProgress()">📤 Export</button>
+                <button class="control-btn secondary-btn" onclick="importProgress()">📥 Import</button>
+                <button class="control-btn primary-btn" onclick="refreshStorageInfo()">🔄 Refresh</button>
+                <button class="control-btn danger-btn" onclick="clearAllData()">🗑️ Clear All</button>
+            </div>
+            
+            <div class="auto-save-status">
+                <div class="status-indicator" id="save-status">
+                    <span class="status-dot"></span>
+                    <span id="save-status-text">Auto-save enabled</span>
+                </div>
+                <small>Your progress is automatically saved every 30 seconds and when you switch tabs.</small>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -722,11 +900,349 @@
             vocabulary: {correct: 0, total: 0}
         };
 
+        // App state that should persist across refreshes
+        let appState = {
+            currentMode: 'vocab',
+            selectedParadigmType: 'all',
+            lastWordIndex: 0,
+            lastParadigmIndex: 0,
+            studyStartTime: Date.now(),
+            dailyGoal: 50,
+            dailyProgress: 0
+        };
+
+        // Enhanced save function - saves everything important
+        function saveData() {
+            try {
+                // Save core data
+                localStorage.setItem('greekVocabulary', JSON.stringify(vocabulary));
+                localStorage.setItem('greekParadigms', JSON.stringify(paradigms));
+                localStorage.setItem('greekStats', JSON.stringify(sessionStats));
+                localStorage.setItem('greekCategoryStats', JSON.stringify(categoryStats));
+                
+                // Save app state
+                appState.currentMode = currentMode;
+                appState.selectedParadigmType = selectedParadigmType;
+                appState.lastWordIndex = currentWordIndex;
+                appState.lastParadigmIndex = currentParadigmIndex;
+                localStorage.setItem('greekAppState', JSON.stringify(appState));
+                
+                // Save timestamp of last save
+                localStorage.setItem('greekLastSaved', Date.now().toString());
+                
+                console.log('✅ Data saved successfully');
+                updateSaveStatus('success', 'Saved!');
+            } catch (error) {
+                console.error('❌ Error saving data:', error);
+                updateSaveStatus('error', 'Save failed');
+                showNotification('Error saving progress. Please check your browser storage.', 'error');
+            }
+        }
+
+        // Enhanced load function - loads everything with fallbacks
+        function loadData() {
+            try {
+                // Load vocabulary with fallback to default
+                const savedVocab = localStorage.getItem('greekVocabulary');
+                if (savedVocab) {
+                    const loadedVocab = JSON.parse(savedVocab);
+                    // Merge with defaults to ensure we have all words
+                    vocabulary = mergeVocabulary(loadedVocab, vocabulary);
+                    console.log(`📚 Loaded ${vocabulary.length} vocabulary words`);
+                } else {
+                    console.log('📚 Using default vocabulary');
+                }
+                
+                // Load paradigms with fallback to default
+                const savedParadigms = localStorage.getItem('greekParadigms');
+                if (savedParadigms) {
+                    const loadedParadigms = JSON.parse(savedParadigms);
+                    paradigms = mergeParadigms(loadedParadigms, paradigms);
+                    console.log(`📖 Loaded ${paradigms.length} paradigms`);
+                } else {
+                    console.log('📖 Using default paradigms');
+                }
+                
+                // Load session stats
+                const savedStats = localStorage.getItem('greekStats');
+                if (savedStats) {
+                    sessionStats = JSON.parse(savedStats);
+                    console.log(`📊 Loaded session stats: ${sessionStats.correct}/${sessionStats.total}`);
+                }
+                
+                // Load category stats
+                const savedCategoryStats = localStorage.getItem('greekCategoryStats');
+                if (savedCategoryStats) {
+                    categoryStats = JSON.parse(savedCategoryStats);
+                    console.log('📈 Loaded category statistics');
+                }
+                
+                // Load app state
+                const savedAppState = localStorage.getItem('greekAppState');
+                if (savedAppState) {
+                    appState = {...appState, ...JSON.parse(savedAppState)};
+                    currentMode = appState.currentMode;
+                    selectedParadigmType = appState.selectedParadigmType;
+                    currentWordIndex = Math.min(appState.lastWordIndex, vocabulary.length - 1);
+                    currentParadigmIndex = Math.min(appState.lastParadigmIndex, paradigms.length - 1);
+                    console.log(`🎯 Restored app state: ${currentMode} mode`);
+                }
+                
+                // Check if data is from today (reset daily progress if new day)
+                const lastSaved = localStorage.getItem('greekLastSaved');
+                if (lastSaved) {
+                    const lastDate = new Date(parseInt(lastSaved));
+                    const today = new Date();
+                    if (lastDate.toDateString() !== today.toDateString()) {
+                        appState.dailyProgress = 0;
+                        appState.studyStartTime = Date.now();
+                        console.log('🌅 New day detected, reset daily progress');
+                    }
+                }
+                
+                showNotification('Progress restored successfully!', 'success');
+                
+            } catch (error) {
+                console.error('❌ Error loading data:', error);
+                showNotification('Error loading saved progress. Using defaults.', 'warning');
+            }
+        }
+
+        // Helper function to merge saved vocabulary with defaults
+        function mergeVocabulary(saved, defaults) {
+            const merged = [...defaults];
+            saved.forEach(savedWord => {
+                const existingIndex = merged.findIndex(w => w.id === savedWord.id);
+                if (existingIndex >= 0) {
+                    // Update existing word with saved progress
+                    merged[existingIndex] = {...merged[existingIndex], ...savedWord};
+                } else {
+                    // Add new word from saved data
+                    merged.push(savedWord);
+                }
+            });
+            return merged;
+        }
+
+        // Helper function to merge saved paradigms with defaults
+        function mergeParadigms(saved, defaults) {
+            const merged = [...defaults];
+            saved.forEach(savedParadigm => {
+                const existingIndex = merged.findIndex(p => p.id === savedParadigm.id);
+                if (existingIndex >= 0) {
+                    merged[existingIndex] = {...merged[existingIndex], ...savedParadigm};
+                } else {
+                    merged.push(savedParadigm);
+                }
+            });
+            return merged;
+        }
+
+        // Auto-save functionality - saves progress frequently
+        function startAutoSave() {
+            // Save every 30 seconds while user is active
+            setInterval(() => {
+                if (document.hasFocus()) {
+                    saveData();
+                }
+            }, 30000);
+            
+            // Save on page unload
+            window.addEventListener('beforeunload', () => {
+                saveData();
+            });
+            
+            // Save on visibility change (tab switching)
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    saveData();
+                }
+            });
+        }
+
+        // Data validation and repair functions
+        function validateAndRepairData() {
+            let repaired = false;
+            
+            // Ensure all vocabulary items have required spaced repetition fields
+            vocabulary.forEach(word => {
+                if (typeof word.lastReviewed === 'undefined') {
+                    word.lastReviewed = 0;
+                    repaired = true;
+                }
+                if (typeof word.interval === 'undefined') {
+                    word.interval = 1;
+                    repaired = true;
+                }
+                if (typeof word.easeFactor === 'undefined') {
+                    word.easeFactor = 2.5;
+                    repaired = true;
+                }
+                if (typeof word.correct === 'undefined') {
+                    word.correct = 0;
+                    repaired = true;
+                }
+                if (typeof word.attempts === 'undefined') {
+                    word.attempts = 0;
+                    repaired = true;
+                }
+            });
+            
+            // Ensure all paradigms have required fields
+            paradigms.forEach(paradigm => {
+                if (typeof paradigm.lastReviewed === 'undefined') {
+                    paradigm.lastReviewed = 0;
+                    repaired = true;
+                }
+                if (typeof paradigm.interval === 'undefined') {
+                    paradigm.interval = 1;
+                    repaired = true;
+                }
+                if (typeof paradigm.easeFactor === 'undefined') {
+                    paradigm.easeFactor = 2.5;
+                    repaired = true;
+                }
+                if (typeof paradigm.correct === 'undefined') {
+                    paradigm.correct = 0;
+                    repaired = true;
+                }
+                if (typeof paradigm.attempts === 'undefined') {
+                    paradigm.attempts = 0;
+                    repaired = true;
+                }
+            });
+            
+            if (repaired) {
+                console.log('🔧 Data repaired and updated');
+                saveData();
+            }
+            
+            return repaired;
+        }
+
+        // Notification system for user feedback
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            
+            // Set background color based on type
+            const colors = {
+                success: '#4CAF50',
+                error: '#f44336',
+                warning: '#ff9800',
+                info: '#2196F3'
+            };
+            notification.style.backgroundColor = colors[type] || colors.info;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.transform = 'translateX(400px)';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
         // Initialize app
         function init() {
+            console.log('🚀 Initializing Greek NT Learning App...');
+            
+            // Load all data
             loadData();
+            
+            // Validate and repair data if needed
+            validateAndRepairData();
+            
+            // Start auto-save system
+            startAutoSave();
+            
+            // Restore UI state
+            restoreUIState();
+            
+            // Update displays
             updateDisplay();
             updateStats();
+            updatePerformanceDashboard();
+            refreshStorageInfo();
+            
+            console.log('✅ App initialized successfully');
+        }
+
+        function restoreUIState() {
+            // Restore mode selection
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            const modeBtn = document.querySelector(`[onclick*="${currentMode}"]`);
+            if (modeBtn) modeBtn.classList.add('active');
+            
+            // Restore paradigm type selection
+            if (currentMode === 'paradigm') {
+                document.querySelectorAll('.paradigm-type-btn').forEach(btn => btn.classList.remove('active'));
+                const paradigmBtn = document.querySelector(`[onclick*="${selectedParadigmType}"]`);
+                if (paradigmBtn) paradigmBtn.classList.add('active');
+            }
+            
+            // Show appropriate sections
+            document.getElementById('vocab-mode').classList.toggle('hidden', currentMode !== 'vocab');
+            document.getElementById('paradigm-mode').classList.toggle('hidden', currentMode !== 'paradigm');
+            document.getElementById('paradigm-selector').classList.toggle('hidden', currentMode !== 'paradigm');
+            document.getElementById('input-mode').classList.toggle('hidden', currentMode !== 'input');
+        }
+
+        // Update save status indicator
+        function updateSaveStatus(type, message) {
+            // Only update if the save status elements exist
+            const statusDot = document.querySelector('.status-dot');
+            const statusText = document.getElementById('save-status-text');
+            
+            if (statusDot && statusText) {
+                statusDot.className = 'status-dot';
+                
+                switch(type) {
+                    case 'saving':
+                        statusDot.classList.add('saving');
+                        break;
+                    case 'error':
+                        statusDot.classList.add('error');
+                        break;
+                    case 'success':
+                        // Keep default green
+                        break;
+                    case 'auto':
+                        // Keep default green with pulse
+                        break;
+                }
+                
+                statusText.textContent = message;
+                
+                // Reset to auto-save status after 2 seconds
+                if (type === 'success') {
+                    setTimeout(() => {
+                        updateSaveStatus('auto', 'Auto-save enabled');
+                    }, 2000);
+                }
+            }
         }
 
         // Mode switching
@@ -750,6 +1266,9 @@
             } else {
                 nextWord();
             }
+            
+            // Save the mode change
+            saveData();
         }
 
         function setParadigmType(type) {
@@ -761,6 +1280,9 @@
             
             // Start new paradigm with selected type
             nextParadigm();
+            
+            // Save the paradigm type change
+            saveData();
         }
 
         // Vocabulary functions
@@ -984,7 +1506,7 @@
         }
 
         function selectAnswer(selectedAnswer) {
-            const paradigm = getParadigmByIndex();
+            const paradigm = paradigms[currentParadigmIndex];
             const buttons = document.querySelectorAll('.answer-btn');
             let correctAnswer = '';
             
@@ -1018,7 +1540,9 @@
             const isCorrect = selectedAnswer === correctAnswer;
             const category = paradigm.category || 'other_paradigms';
             
+            paradigm.attempts++;
             if (isCorrect) {
+                paradigm.correct++;
                 sessionStats.correct++;
                 categoryStats[category].correct++;
             } else {
@@ -1033,14 +1557,7 @@
             updateStats();
             updatePerformanceDashboard();
             checkForRecommendations();
-        }
-
-        function getParadigmByIndex() {
-            let filteredParadigms = paradigms;
-            if (selectedParadigmType !== 'all') {
-                filteredParadigms = paradigms.filter(p => p.category === selectedParadigmType);
-            }
-            return filteredParadigms[currentParadigmIndex];
+            saveData();
         }
 
         // Text-to-speech with Erasmian pronunciation mapping
@@ -1534,30 +2051,6 @@
             }
         }
 
-        function saveData() {
-            localStorage.setItem('greekVocabulary', JSON.stringify(vocabulary));
-            localStorage.setItem('greekStats', JSON.stringify(sessionStats));
-            localStorage.setItem('greekCategoryStats', JSON.stringify(categoryStats));
-        }
-
-        function loadData() {
-            const savedVocab = localStorage.getItem('greekVocabulary');
-            const savedStats = localStorage.getItem('greekStats');
-            const savedCategoryStats = localStorage.getItem('greekCategoryStats');
-            
-            if (savedVocab) {
-                vocabulary = JSON.parse(savedVocab);
-            }
-            
-            if (savedStats) {
-                sessionStats = JSON.parse(savedStats);
-            }
-            
-            if (savedCategoryStats) {
-                categoryStats = JSON.parse(savedCategoryStats);
-            }
-        }
-
         // Study recommendations system
         function checkForRecommendations() {
             // Show recommendations after every 10 questions
@@ -1654,10 +2147,147 @@
             });
         }
 
+        // Memory management functions for UI
+        function saveDataManually() {
+            updateSaveStatus('saving', 'Saving...');
+            
+            setTimeout(() => {
+                saveData();
+                refreshStorageInfo();
+                
+                setTimeout(() => {
+                    updateSaveStatus('auto', 'Auto-save enabled');
+                }, 2000);
+            }, 500);
+        }
+
+        function exportProgress() {
+            const exportData = {
+                vocabulary: vocabulary,
+                paradigms: paradigms,
+                sessionStats: sessionStats,
+                categoryStats: categoryStats,
+                appState: appState,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `greek-nt-progress-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showNotification('Progress exported successfully!', 'success');
+        }
+
+        function importProgress() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        try {
+                            const importData = JSON.parse(e.target.result);
+                            
+                            // Validate import data
+                            if (importData.vocabulary && importData.paradigms) {
+                                vocabulary = importData.vocabulary;
+                                paradigms = importData.paradigms;
+                                sessionStats = importData.sessionStats || sessionStats;
+                                categoryStats = importData.categoryStats || categoryStats;
+                                appState = {...appState, ...(importData.appState || {})};
+                                
+                                // Validate and repair imported data
+                                validateAndRepairData();
+                                
+                                // Save imported data
+                                saveData();
+                                
+                                // Refresh display
+                                updateDisplay();
+                                updateStats();
+                                updatePerformanceDashboard();
+                                refreshStorageInfo();
+                                
+                                showNotification('Progress imported successfully!', 'success');
+                            } else {
+                                throw new Error('Invalid file format');
+                            }
+                        } catch (error) {
+                            console.error('Import error:', error);
+                            showNotification('Error importing file. Please check the format.', 'error');
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        function getStorageInfo() {
+            let totalSize = 0;
+            let itemCount = 0;
+            
+            for (let key in localStorage) {
+                if (key.startsWith('greek')) {
+                    const item = localStorage.getItem(key);
+                    totalSize += item ? item.length : 0;
+                    itemCount++;
+                }
+            }
+            
+            return {
+                totalSize: totalSize,
+                itemCount: itemCount,
+                vocabulary: vocabulary.length,
+                paradigms: paradigms.length,
+                totalStudied: sessionStats.total,
+                lastSaved: localStorage.getItem('greekLastSaved') ? 
+                    new Date(parseInt(localStorage.getItem('greekLastSaved'))).toLocaleString() : 'Never'
+            };
+        }
+
+        function refreshStorageInfo() {
+            const info = getStorageInfo();
+            
+            const vocabCountEl = document.getElementById('vocab-count');
+            const paradigmCountEl = document.getElementById('paradigm-count');
+            const totalQuestionsEl = document.getElementById('total-questions');
+            const lastSavedEl = document.getElementById('last-saved');
+            const dataSizeEl = document.getElementById('data-size');
+            
+            if (vocabCountEl) vocabCountEl.textContent = info.vocabulary;
+            if (paradigmCountEl) paradigmCountEl.textContent = info.paradigms;
+            if (totalQuestionsEl) totalQuestionsEl.textContent = info.totalStudied;
+            if (lastSavedEl) lastSavedEl.textContent = info.lastSaved;
+            if (dataSizeEl) dataSizeEl.textContent = `${(info.totalSize / 1024).toFixed(1)} KB`;
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear ALL progress? This cannot be undone!')) {
+                const keysToRemove = [];
+                for (let key in localStorage) {
+                    if (key.startsWith('greek')) {
+                        keysToRemove.push(key);
+                    }
+                }
+                
+                keysToRemove.forEach(key => localStorage.removeItem(key));
+                
+                // Reset to defaults - reload the page to reinitialize
+                location.reload();
+            }
+        }
+
         // Initialize when page loads
         window.onload = function() {
             init();
-            updatePerformanceDashboard();
         };
     </script>
 </body>
