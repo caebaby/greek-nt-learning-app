@@ -4,8 +4,8 @@
   "description": "NT Greek Learning App with Biblingo Integration and Spaced Repetition",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server $PORT",
-    "dev": "python3 -m http.server 8080"
+    "start": "python3 -m http.server $PORT --bind 0.0.0.0",
+    "dev": "python3 -m http.server 8080 --bind 0.0.0.0"
   },
   "keywords": ["greek", "learning", "new-testament", "spaced-repetition", "biblingo"],
   "author": "caebaby",
