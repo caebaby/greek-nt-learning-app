@@ -1265,4 +1265,400 @@
         function parseLessonDocument(content, filename) {
             try {
                 const parsedVocab = extractVocabularyFromText(content);
-                if (parsedV
+                if (parsedVocab.length > 0) {
+                    // Add parsed vocabulary
+                    parsedVocab.forEach(word => {
+                        const newWord = {
+                            id: Date.now() + Math.random(),
+                            greek: word.greek,
+                            english: word.english,
+                            type: word.type,
+                            declension: word.declension,
+                            correct: 0,
+                            attempts: 0,
+                            lastReviewed: 0,
+                            interval: 1,
+                            easeFactor: 2.5
+                        };
+                        vocabulary.push(newWord);
+                    });
+                    
+                    saveData();
+                    displayVocabList();
+                    updatePerformanceDashboard();
+                    
+                    alert(`Successfully imported ${parsedVocab.length} words from ${filename}!`);
+                } else {
+                    alert('No vocabulary found. Make sure the text contains vocabulary tables with Greek words and English translations.');
+                }
+            } catch (error) {
+                alert('Error parsing document. Please check the format and try again.');
+                console.error('Parse error:', error);
+            }
+        }
+
+        function extractVocabularyFromText(text) {
+            const words = [];
+            const lines = text.split('\n');
+            
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                
+                // Look for vocabulary table patterns
+                // Pattern 1: "1 ὁ ἄνθρωπος human being Noun ἀνθρώπου"
+                const tableMatch = line.match(/^\d+\s+(.+?)\s+(.+?)\s+(Noun|Verb|Adj|Adverb|Prep|Conj|Interjection|Num)\s/);
+                if (tableMatch) {
+                    const greek = tableMatch[1].trim();
+                    const english = tableMatch[2].trim();
+                    const category = tableMatch[3].toLowerCase();
+                    
+                    const detected = detectWordTypeByPattern(greek);
+                    words.push({
+                        greek: greek,
+                        english: english,
+                        type: category === 'noun' ? 'noun' : 
+                              category === 'verb' ? 'verb' :
+                              category === 'adj' ? 'adjective' :
+                              category === 'prep' ? 'preposition' :
+                              category === 'conj' ? 'conjunction' :
+                              category === 'num' ? 'number' :
+                              detected.type || 'noun',
+                        declension: detected.declension
+                    });
+                }
+                
+                // Pattern 2: Simple format "Greek word - English meaning"
+                const simpleMatch = line.match(/^([α-ωΑ-Ω\s\(\)άέήίόύώἀ-῾]+)\s*[-–]\s*(.+)$/);
+                if (simpleMatch && !tableMatch) {
+                    const greek = simpleMatch[1].trim();
+                    const english = simpleMatch[2].trim();
+                    const detected = detectWordTypeByPattern(greek);
+                    
+                    words.push({
+                        greek: greek,
+                        english: english,
+                        type: detected.type || 'noun',
+                        declension: detected.declension
+                    });
+                }
+            }
+            
+            return words;
+        }
+
+        // Vocabulary management
+        function addVocab() {
+            const greek = document.getElementById('greek-input').value.trim();
+            const english = document.getElementById('english-input').value.trim();
+            const type = document.getElementById('type-input').value;
+            const declension = document.getElementById('declension-input').value;
+            
+            if (greek && english) {
+                const newWord = {
+                    id: Date.now(),
+                    greek: greek,
+                    english: english,
+                    type: type,
+                    declension: type === 'noun' ? declension : undefined,
+                    correct: 0,
+                    attempts: 0,
+                    lastReviewed: 0,
+                    interval: 1,
+                    easeFactor: 2.5
+                };
+                
+                vocabulary.push(newWord);
+                saveData();
+                displayVocabList();
+                updatePerformanceDashboard();
+                
+                // Clear inputs
+                document.getElementById('greek-input').value = '';
+                document.getElementById('english-input').value = '';
+            }
+        }
+
+        function deleteVocab(id) {
+            vocabulary = vocabulary.filter(word => word.id !== id);
+            saveData();
+            displayVocabList();
+        }
+
+        function displayVocabList() {
+            const list = document.getElementById('vocab-list');
+            list.innerHTML = vocabulary.map(word => 
+                `<div class="vocab-item">
+                    <span><strong>${word.greek}</strong> - ${word.english} (${word.type}${word.declension ? ', ' + word.declension + ' decl.' : ''})</span>
+                    <button class="delete-btn" onclick="deleteVocab(${word.id})">Delete</button>
+                </div>`
+            ).join('');
+        }
+
+        function importVocab() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.csv';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const csv = e.target.result;
+                        const lines = csv.split('\n');
+                        lines.forEach(line => {
+                            const [greek, english, type] = line.split(',');
+                            if (greek && english) {
+                                vocabulary.push({
+                                    id: Date.now() + Math.random(),
+                                    greek: greek.trim(),
+                                    english: english.trim(),
+                                    type: (type || 'noun').trim(),
+                                    correct: 0,
+                                    attempts: 0,
+                                    lastReviewed: 0,
+                                    interval: 1,
+                                    easeFactor: 2.5
+                                });
+                            }
+                        });
+                        saveData();
+                        displayVocabList();
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        // Performance dashboard
+        function updatePerformanceDashboard() {
+            const totalAttempted = sessionStats.total;
+            const accuracyRate = totalAttempted > 0 ? Math.round((sessionStats.correct / totalAttempted) * 100) : 0;
+            const wordsDue = getDueWords().length + getDueParadigms(paradigms).length;
+            
+            document.getElementById('total-attempted').textContent = totalAttempted;
+            document.getElementById('accuracy-rate').textContent = accuracyRate + '%';
+            document.getElementById('words-due').textContent = wordsDue;
+            
+            // Update category stats
+            const categoryStatsEl = document.getElementById('category-stats');
+            let categoryHtml = '';
+            
+            for (const [key, name] of Object.entries({
+                'articles': 'Articles',
+                'to_be_verbs': 'To Be Verbs',
+                'pronouns': 'Pronouns',
+                'present_active': 'Present Active',
+                'present_mediopassive': 'Present M/P',
+                'deponent_verbs': 'Deponent Verbs',
+                'vocabulary': 'Vocabulary'
+            })) {
+                const stats = categoryStats[key];
+                if (stats.total > 0) {
+                    const percentage = Math.round((stats.correct / stats.total) * 100);
+                    categoryHtml += `
+                        <div class="category-stat">
+                            <span>${name}</span>
+                            <span>${percentage}% (${stats.correct}/${stats.total})</span>
+                        </div>
+                    `;
+                }
+            }
+            categoryStatsEl.innerHTML = categoryHtml;
+            
+            // Update recent mistakes
+            updateRecentMistakes();
+        }
+
+        function updateRecentMistakes() {
+            const mistakeList = document.getElementById('mistake-list');
+            const recentMistakes = [];
+            
+            // Check vocabulary mistakes
+            vocabulary.forEach(word => {
+                if (word.attempts > 0 && word.correct / word.attempts < 0.7) {
+                    recentMistakes.push({
+                        greek: word.greek,
+                        english: word.english,
+                        type: 'vocabulary',
+                        accuracy: Math.round((word.correct / word.attempts) * 100)
+                    });
+                }
+            });
+            
+            // Check paradigm mistakes
+            paradigms.forEach(paradigm => {
+                if (paradigm.attempts > 0 && paradigm.correct / paradigm.attempts < 0.7) {
+                    recentMistakes.push({
+                        greek: paradigm.greek,
+                        english: paradigm.english,
+                        type: paradigm.category,
+                        accuracy: Math.round((paradigm.correct / paradigm.attempts) * 100)
+                    });
+                }
+            });
+            
+            // Sort by lowest accuracy
+            recentMistakes.sort((a, b) => a.accuracy - b.accuracy);
+            
+            if (recentMistakes.length > 0) {
+                mistakeList.innerHTML = recentMistakes.slice(0, 5).map(mistake => 
+                    `<div class="mistake-item">
+                        <span class="mistake-word">${mistake.greek}</span> - ${mistake.english} 
+                        <small>(${mistake.type}, ${mistake.accuracy}% accuracy)</small>
+                    </div>`
+                ).join('');
+            } else {
+                mistakeList.innerHTML = '<div style="color: #4caf50; font-style: italic;">No problem areas identified yet!</div>';
+            }
+        }
+
+        // Statistics and data management
+        function updateStats() {
+            document.getElementById('remaining-count').textContent = vocabulary.length;
+            document.getElementById('correct-score').textContent = sessionStats.correct;
+            document.getElementById('incorrect-score').textContent = sessionStats.incorrect;
+            
+            // Calculate comprehension score
+            const percentage = sessionStats.total > 0 
+                ? Math.round((sessionStats.correct / sessionStats.total) * 100)
+                : 0;
+            document.getElementById('comprehension-percentage').textContent = percentage + '%';
+        }
+
+        function updateDisplay() {
+            if (currentMode === 'vocab') {
+                nextWord();
+            } else if (currentMode === 'paradigm') {
+                nextParadigm();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('greekVocabulary', JSON.stringify(vocabulary));
+            localStorage.setItem('greekStats', JSON.stringify(sessionStats));
+            localStorage.setItem('greekCategoryStats', JSON.stringify(categoryStats));
+        }
+
+        function loadData() {
+            const savedVocab = localStorage.getItem('greekVocabulary');
+            const savedStats = localStorage.getItem('greekStats');
+            const savedCategoryStats = localStorage.getItem('greekCategoryStats');
+            
+            if (savedVocab) {
+                vocabulary = JSON.parse(savedVocab);
+            }
+            
+            if (savedStats) {
+                sessionStats = JSON.parse(savedStats);
+            }
+            
+            if (savedCategoryStats) {
+                categoryStats = JSON.parse(savedCategoryStats);
+            }
+        }
+
+        // Study recommendations system
+        function checkForRecommendations() {
+            // Show recommendations after every 10 questions
+            if (sessionStats.total > 0 && sessionStats.total % 10 === 0) {
+                showRecommendations();
+            }
+        }
+
+        function showRecommendations() {
+            const recommendations = generateRecommendations();
+            const recommendationsDiv = document.getElementById('study-recommendations');
+            const listDiv = document.getElementById('recommendations-list');
+            
+            if (recommendations.length > 0) {
+                listDiv.innerHTML = recommendations.map(rec => 
+                    `<div class="recommendation-item">
+                        <h4>${rec.title} ${rec.isWeak ? '<span class="weakness-indicator">Needs Work</span>' : '<span class="strength-indicator">Strong</span>'}</h4>
+                        <p>${rec.description}</p>
+                    </div>`
+                ).join('');
+                
+                recommendationsDiv.classList.remove('hidden');
+            }
+        }
+
+        function hideRecommendations() {
+            document.getElementById('study-recommendations').classList.add('hidden');
+        }
+
+        function generateRecommendations() {
+            const recommendations = [];
+            const categories = {
+                'articles': 'Articles/Forms',
+                'to_be_verbs': 'To Be Verbs (εἰμί)',
+                'pronouns': 'Pronouns',
+                'present_active': 'Present Active Indicative',
+                'present_mediopassive': 'Present Medio-Passive',
+                'deponent_verbs': 'Deponent Verbs',
+                'other_paradigms': 'Other Paradigms',
+                'vocabulary': 'Vocabulary'
+            };
+
+            for (const [key, name] of Object.entries(categories)) {
+                const stats = categoryStats[key];
+                if (stats.total > 0) {
+                    const percentage = Math.round((stats.correct / stats.total) * 100);
+                    const isWeak = percentage < 70;
+                    
+                    let description = '';
+                    if (key === 'articles') {
+                        description = isWeak ? 
+                            `You're struggling with article forms (${percentage}% correct). Focus on masculine/feminine/neuter patterns.` :
+                            `Great work with articles! You're getting ${percentage}% correct.`;
+                    } else if (key === 'to_be_verbs') {
+                        description = isWeak ? 
+                            `The verb εἰμί needs practice (${percentage}% correct). Review person and number endings.` :
+                            `Excellent grasp of εἰμί forms! ${percentage}% accuracy.`;
+                    } else if (key === 'pronouns') {
+                        description = isWeak ? 
+                            `Pronoun cases need attention (${percentage}% correct). Practice nominative vs accusative patterns.` :
+                            `Strong pronoun knowledge! ${percentage}% correct.`;
+                    } else if (key === 'present_active') {
+                        description = isWeak ? 
+                            `Present active forms need work (${percentage}% correct). Review person/number endings.` :
+                            `Solid present active knowledge! ${percentage}% correct.`;
+                    } else if (key === 'present_mediopassive') {
+                        description = isWeak ? 
+                            `Present medio-passive forms need practice (${percentage}% correct). Focus on the new endings.` :
+                            `Great progress with medio-passive! ${percentage}% correct.`;
+                    } else if (key === 'vocabulary') {
+                        description = isWeak ? 
+                            `Vocabulary recognition could improve (${percentage}% correct). Review your word list more frequently.` :
+                            `Vocabulary is solid! ${percentage}% recognition rate.`;
+                    } else {
+                        description = isWeak ? 
+                            `This area needs work (${percentage}% correct). Spend more time with these paradigms.` :
+                            `Good progress in this area! ${percentage}% correct.`;
+                    }
+                    
+                    recommendations.push({
+                        title: name,
+                        description: description,
+                        isWeak: isWeak,
+                        percentage: percentage
+                    });
+                }
+            }
+            
+            // Sort by weakest first
+            return recommendations.sort((a, b) => {
+                if (a.isWeak && !b.isWeak) return -1;
+                if (!a.isWeak && b.isWeak) return 1;
+                return a.percentage - b.percentage;
+            });
+        }
+
+        // Initialize when page loads
+        window.onload = function() {
+            init();
+            updatePerformanceDashboard();
+        };
+    </script>
+</body>
+</html>
