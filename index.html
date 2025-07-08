@@ -817,39 +817,30 @@
     <script>
         // Data storage
         let vocabulary = [
-            // Lesson 1.1
             {id: 1, greek: "ὁ ἄνθρωπος", english: "human being", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 2, greek: "ὁ ἄρτος", english: "loaf", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 3, greek: "ἡ ἀδελφή", english: "sister", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 4, greek: "τὸ τέκνον", english: "child", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 5, greek: "τὸ πετεινόν", english: "bird", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 6, greek: "κράζω", english: "to shout", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Lesson 1.2
             {id: 7, greek: "ὁ ὀφθαλμός", english: "eye", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 8, greek: "ἡ κεφαλή", english: "head", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 9, greek: "ἡ ποίμνη", english: "flock", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 10, greek: "τὸ ποτήριον", english: "cup", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 11, greek: "ὁ ἵππος", english: "horse", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 12, greek: "ὁ θεός", english: "God", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Lesson 1.3
             {id: 13, greek: "τύπτω", english: "to hit", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 14, greek: "ὁ καρπός", english: "fruit", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 15, greek: "ἡ σκηνή", english: "tent", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 16, greek: "ἡ ἐπιστολή", english: "letter", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 17, greek: "τὸ ἱμάτιον", english: "clothing", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 18, greek: "ὁ νόμος", english: "law", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Lesson 1.4
             {id: 19, greek: "τὸ βιβλίον", english: "book", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 20, greek: "νεύω", english: "to nod", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 21, greek: "βλέπω", english: "to see", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 22, greek: "ἐσθίω", english: "to eat", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 23, greek: "ἡ κώμη", english: "village", type: "noun", declension: "1st", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 24, greek: "ὁ ἀπόστολος", english: "ambassador", type: "noun", declension: "2nd", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Continue with more vocabulary from your lessons...
             {id: 25, greek: "ἔρχομαι", english: "to come", type: "deponent_verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 26, greek: "πορεύομαι", english: "to go", type: "deponent_verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 27, greek: "εἰμί", english: "to be", type: "verb", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
@@ -859,26 +850,19 @@
         ];
 
         let paradigms = [
-            // Present Active Indicative
             {id: 1, greek: "λύω", english: "I am loosing", person: "1st", number: "singular", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 2, greek: "λύεις", english: "you are loosing", person: "2nd", number: "singular", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 3, greek: "λύει", english: "he/she/it is loosing", person: "3rd", number: "singular", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 4, greek: "λύομεν", english: "we are loosing", person: "1st", number: "plural", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 5, greek: "λύετε", english: "you are loosing", person: "2nd", number: "plural", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 6, greek: "λύουσι(ν)", english: "they are loosing", person: "3rd", number: "plural", type: "present_active", category: "present_active", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Present Medio-Passive
             {id: 7, greek: "λύομαι", english: "I am being loosed", person: "1st", number: "singular", type: "present_mediopassive", category: "present_mediopassive", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 8, greek: "λύῃ", english: "you are being loosed", person: "2nd", number: "singular", type: "present_mediopassive", category: "present_mediopassive", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 9, greek: "λύεται", english: "he/she/it is being loosed", person: "3rd", number: "singular", type: "present_mediopassive", category: "present_mediopassive", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // Articles
             {id: 10, greek: "ὁ", english: "the", case: "nominative", gender: "masculine", type: "article", category: "articles", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 11, greek: "τοῦ", english: "the", case: "genitive", gender: "masculine", type: "article", category: "articles", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 12, greek: "τῷ", english: "the", case: "dative", gender: "masculine", type: "article", category: "articles", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 13, greek: "τόν", english: "the", case: "accusative", gender: "masculine", type: "article", category: "articles", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
-            
-            // To Be Verbs
             {id: 14, greek: "εἰμί", english: "I am", person: "1st", number: "singular", type: "verb", category: "to_be_verbs", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 15, greek: "εἶ", english: "you are", person: "2nd", number: "singular", type: "verb", category: "to_be_verbs", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5},
             {id: 16, greek: "ἐστί(ν)", english: "he/she/it is", person: "3rd", number: "singular", type: "verb", category: "to_be_verbs", correct: 0, attempts: 0, lastReviewed: 0, interval: 1, easeFactor: 2.5}
@@ -900,7 +884,6 @@
             vocabulary: {correct: 0, total: 0}
         };
 
-        // App state that should persist across refreshes
         let appState = {
             currentMode: 'vocab',
             selectedParadigmType: 'all',
@@ -911,23 +894,19 @@
             dailyProgress: 0
         };
 
-        // Enhanced save function - saves everything important
+        // All JavaScript functions
         function saveData() {
             try {
-                // Save core data
                 localStorage.setItem('greekVocabulary', JSON.stringify(vocabulary));
                 localStorage.setItem('greekParadigms', JSON.stringify(paradigms));
                 localStorage.setItem('greekStats', JSON.stringify(sessionStats));
                 localStorage.setItem('greekCategoryStats', JSON.stringify(categoryStats));
                 
-                // Save app state
                 appState.currentMode = currentMode;
                 appState.selectedParadigmType = selectedParadigmType;
                 appState.lastWordIndex = currentWordIndex;
                 appState.lastParadigmIndex = currentParadigmIndex;
                 localStorage.setItem('greekAppState', JSON.stringify(appState));
-                
-                // Save timestamp of last save
                 localStorage.setItem('greekLastSaved', Date.now().toString());
                 
                 console.log('✅ Data saved successfully');
@@ -939,45 +918,30 @@
             }
         }
 
-        // Enhanced load function - loads everything with fallbacks
         function loadData() {
             try {
-                // Load vocabulary with fallback to default
                 const savedVocab = localStorage.getItem('greekVocabulary');
                 if (savedVocab) {
                     const loadedVocab = JSON.parse(savedVocab);
-                    // Merge with defaults to ensure we have all words
                     vocabulary = mergeVocabulary(loadedVocab, vocabulary);
-                    console.log(`📚 Loaded ${vocabulary.length} vocabulary words`);
-                } else {
-                    console.log('📚 Using default vocabulary');
                 }
                 
-                // Load paradigms with fallback to default
                 const savedParadigms = localStorage.getItem('greekParadigms');
                 if (savedParadigms) {
                     const loadedParadigms = JSON.parse(savedParadigms);
                     paradigms = mergeParadigms(loadedParadigms, paradigms);
-                    console.log(`📖 Loaded ${paradigms.length} paradigms`);
-                } else {
-                    console.log('📖 Using default paradigms');
                 }
                 
-                // Load session stats
                 const savedStats = localStorage.getItem('greekStats');
                 if (savedStats) {
                     sessionStats = JSON.parse(savedStats);
-                    console.log(`📊 Loaded session stats: ${sessionStats.correct}/${sessionStats.total}`);
                 }
                 
-                // Load category stats
                 const savedCategoryStats = localStorage.getItem('greekCategoryStats');
                 if (savedCategoryStats) {
                     categoryStats = JSON.parse(savedCategoryStats);
-                    console.log('📈 Loaded category statistics');
                 }
                 
-                // Load app state
                 const savedAppState = localStorage.getItem('greekAppState');
                 if (savedAppState) {
                     appState = {...appState, ...JSON.parse(savedAppState)};
@@ -985,46 +949,28 @@
                     selectedParadigmType = appState.selectedParadigmType;
                     currentWordIndex = Math.min(appState.lastWordIndex, vocabulary.length - 1);
                     currentParadigmIndex = Math.min(appState.lastParadigmIndex, paradigms.length - 1);
-                    console.log(`🎯 Restored app state: ${currentMode} mode`);
-                }
-                
-                // Check if data is from today (reset daily progress if new day)
-                const lastSaved = localStorage.getItem('greekLastSaved');
-                if (lastSaved) {
-                    const lastDate = new Date(parseInt(lastSaved));
-                    const today = new Date();
-                    if (lastDate.toDateString() !== today.toDateString()) {
-                        appState.dailyProgress = 0;
-                        appState.studyStartTime = Date.now();
-                        console.log('🌅 New day detected, reset daily progress');
-                    }
                 }
                 
                 showNotification('Progress restored successfully!', 'success');
-                
             } catch (error) {
                 console.error('❌ Error loading data:', error);
                 showNotification('Error loading saved progress. Using defaults.', 'warning');
             }
         }
 
-        // Helper function to merge saved vocabulary with defaults
         function mergeVocabulary(saved, defaults) {
             const merged = [...defaults];
             saved.forEach(savedWord => {
                 const existingIndex = merged.findIndex(w => w.id === savedWord.id);
                 if (existingIndex >= 0) {
-                    // Update existing word with saved progress
                     merged[existingIndex] = {...merged[existingIndex], ...savedWord};
                 } else {
-                    // Add new word from saved data
                     merged.push(savedWord);
                 }
             });
             return merged;
         }
 
-        // Helper function to merge saved paradigms with defaults
         function mergeParadigms(saved, defaults) {
             const merged = [...defaults];
             saved.forEach(savedParadigm => {
@@ -1038,21 +984,17 @@
             return merged;
         }
 
-        // Auto-save functionality - saves progress frequently
         function startAutoSave() {
-            // Save every 30 seconds while user is active
             setInterval(() => {
                 if (document.hasFocus()) {
                     saveData();
                 }
             }, 30000);
             
-            // Save on page unload
             window.addEventListener('beforeunload', () => {
                 saveData();
             });
             
-            // Save on visibility change (tab switching)
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
                     saveData();
@@ -1060,11 +1002,9 @@
             });
         }
 
-        // Data validation and repair functions
         function validateAndRepairData() {
             let repaired = false;
             
-            // Ensure all vocabulary items have required spaced repetition fields
             vocabulary.forEach(word => {
                 if (typeof word.lastReviewed === 'undefined') {
                     word.lastReviewed = 0;
@@ -1088,7 +1028,6 @@
                 }
             });
             
-            // Ensure all paradigms have required fields
             paradigms.forEach(paradigm => {
                 if (typeof paradigm.lastReviewed === 'undefined') {
                     paradigm.lastReviewed = 0;
@@ -1120,7 +1059,6 @@
             return repaired;
         }
 
-        // Notification system for user feedback
         function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification notification-${type}`;
@@ -1138,7 +1076,6 @@
                 transition: transform 0.3s ease;
             `;
             
-            // Set background color based on type
             const colors = {
                 success: '#4CAF50',
                 error: '#f44336',
@@ -1149,12 +1086,10 @@
             
             document.body.appendChild(notification);
             
-            // Animate in
             setTimeout(() => {
                 notification.style.transform = 'translateX(0)';
             }, 100);
             
-            // Remove after 3 seconds
             setTimeout(() => {
                 notification.style.transform = 'translateX(400px)';
                 setTimeout(() => {
@@ -1165,95 +1100,12 @@
             }, 3000);
         }
 
-        // Initialize app
-        function init() {
-            console.log('🚀 Initializing Greek NT Learning App...');
-            
-            // Load all data
-            loadData();
-            
-            // Validate and repair data if needed
-            validateAndRepairData();
-            
-            // Start auto-save system
-            startAutoSave();
-            
-            // Restore UI state
-            restoreUIState();
-            
-            // Update displays
-            updateDisplay();
-            updateStats();
-            updatePerformanceDashboard();
-            refreshStorageInfo();
-            
-            console.log('✅ App initialized successfully');
-        }
-
-        function restoreUIState() {
-            // Restore mode selection
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            const modeBtn = document.querySelector(`[onclick*="${currentMode}"]`);
-            if (modeBtn) modeBtn.classList.add('active');
-            
-            // Restore paradigm type selection
-            if (currentMode === 'paradigm') {
-                document.querySelectorAll('.paradigm-type-btn').forEach(btn => btn.classList.remove('active'));
-                const paradigmBtn = document.querySelector(`[onclick*="${selectedParadigmType}"]`);
-                if (paradigmBtn) paradigmBtn.classList.add('active');
-            }
-            
-            // Show appropriate sections
-            document.getElementById('vocab-mode').classList.toggle('hidden', currentMode !== 'vocab');
-            document.getElementById('paradigm-mode').classList.toggle('hidden', currentMode !== 'paradigm');
-            document.getElementById('paradigm-selector').classList.toggle('hidden', currentMode !== 'paradigm');
-            document.getElementById('input-mode').classList.toggle('hidden', currentMode !== 'input');
-        }
-
-        // Update save status indicator
-        function updateSaveStatus(type, message) {
-            // Only update if the save status elements exist
-            const statusDot = document.querySelector('.status-dot');
-            const statusText = document.getElementById('save-status-text');
-            
-            if (statusDot && statusText) {
-                statusDot.className = 'status-dot';
-                
-                switch(type) {
-                    case 'saving':
-                        statusDot.classList.add('saving');
-                        break;
-                    case 'error':
-                        statusDot.classList.add('error');
-                        break;
-                    case 'success':
-                        // Keep default green
-                        break;
-                    case 'auto':
-                        // Keep default green with pulse
-                        break;
-                }
-                
-                statusText.textContent = message;
-                
-                // Reset to auto-save status after 2 seconds
-                if (type === 'success') {
-                    setTimeout(() => {
-                        updateSaveStatus('auto', 'Auto-save enabled');
-                    }, 2000);
-                }
-            }
-        }
-
-        // Mode switching
         function setMode(mode) {
             currentMode = mode;
             
-            // Update button states
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Show/hide sections
             document.getElementById('vocab-mode').classList.toggle('hidden', mode !== 'vocab');
             document.getElementById('paradigm-mode').classList.toggle('hidden', mode !== 'paradigm');
             document.getElementById('paradigm-selector').classList.toggle('hidden', mode !== 'paradigm');
@@ -1267,46 +1119,35 @@
                 nextWord();
             }
             
-            // Save the mode change
             saveData();
         }
 
         function setParadigmType(type) {
             selectedParadigmType = type;
             
-            // Update button states
             document.querySelectorAll('.paradigm-type-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
             
-            // Start new paradigm with selected type
             nextParadigm();
-            
-            // Save the paradigm type change
             saveData();
         }
 
-        // Vocabulary functions
         function nextWord() {
             if (vocabulary.length === 0) return;
             
-            // Get words that are due for review using spaced repetition
             const dueWords = getDueWords();
             
             if (dueWords.length > 0) {
-                // Select from due words, prioritizing those with lower ease factors (harder words)
                 const sortedDue = dueWords.sort((a, b) => a.easeFactor - b.easeFactor);
                 currentWordIndex = vocabulary.indexOf(sortedDue[0]);
             } else {
-                // If no words are due, pick randomly
-                currentWordIndex = Math.floor(Math.random() * vocabulary.length);
+                currentWordIndex = (currentWordIndex + 1) % vocabulary.length;
             }
             
             const word = vocabulary[currentWordIndex];
             
             document.getElementById('greek-word').textContent = word.greek;
             document.getElementById('english-hint').textContent = word.english;
-            
-            // Hide the answer and reset buttons
             document.getElementById('english-hint').style.display = 'none';
             document.getElementById('reveal-btn').classList.remove('hidden');
             document.getElementById('know-btn').classList.add('hidden');
@@ -1319,87 +1160,16 @@
         function getDueWords() {
             const now = Date.now();
             return vocabulary.filter(word => {
+                if (word.lastReviewed === 0) {
+                    return true;
+                }
                 const timeSinceReview = now - word.lastReviewed;
-                const intervalMs = word.interval * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+                const intervalMs = word.interval * 24 * 60 * 60 * 1000;
                 return timeSinceReview >= intervalMs;
             });
         }
 
-        function updateSpacedRepetition(word, quality) {
-            const now = Date.now();
-            word.lastReviewed = now;
-            
-            if (quality >= 3) { // Correct answer
-                if (word.interval === 1) {
-                    word.interval = 6; // 6 days after first success
-                } else {
-                    word.interval = Math.round(word.interval * word.easeFactor);
-                }
-                word.easeFactor = word.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
-            } else { // Incorrect answer
-                word.interval = 1; // Reset to 1 day
-                word.easeFactor = Math.max(1.3, word.easeFactor - 0.2);
-            }
-            
-            // Ensure ease factor stays within reasonable bounds
-            word.easeFactor = Math.max(1.3, Math.min(2.5, word.easeFactor));
-        }
-
-        function revealAnswer() {
-            // Show the English translation
-            document.getElementById('english-hint').style.display = 'block';
-            
-            // Hide reveal button, show know/don't know buttons
-            document.getElementById('reveal-btn').classList.add('hidden');
-            document.getElementById('know-btn').classList.remove('hidden');
-            document.getElementById('dont-know-btn').classList.remove('hidden');
-        }
-
-        function markCorrect() {
-            if (vocabulary.length === 0) return;
-            
-            const word = vocabulary[currentWordIndex];
-            word.correct++;
-            word.attempts++;
-            updateSpacedRepetition(word, 4); // Quality 4 = "correct"
-            
-            sessionStats.correct++;
-            sessionStats.total++;
-            categoryStats.vocabulary.correct++;
-            categoryStats.vocabulary.total++;
-            
-            // Hide know/don't know buttons, show next button
-            document.getElementById('know-btn').classList.add('hidden');
-            document.getElementById('dont-know-btn').classList.add('hidden');
-            document.getElementById('next-btn').classList.remove('hidden');
-            
-            saveData();
-            checkForRecommendations();
-        }
-
-        function markIncorrect() {
-            if (vocabulary.length === 0) return;
-            
-            const word = vocabulary[currentWordIndex];
-            word.attempts++;
-            updateSpacedRepetition(word, 1); // Quality 1 = "incorrect"
-            
-            sessionStats.incorrect++;
-            sessionStats.total++;
-            categoryStats.vocabulary.total++;
-            
-            // Hide know/don't know buttons, show next button
-            document.getElementById('know-btn').classList.add('hidden');
-            document.getElementById('dont-know-btn').classList.add('hidden');
-            document.getElementById('next-btn').classList.remove('hidden');
-            
-            saveData();
-            checkForRecommendations();
-        }
-
-        // Paradigm functions
         function nextParadigm() {
-            // Filter paradigms based on selected type
             let filteredParadigms = paradigms;
             if (selectedParadigmType !== 'all') {
                 filteredParadigms = paradigms.filter(p => p.category === selectedParadigmType);
@@ -1407,32 +1177,26 @@
             
             if (filteredParadigms.length === 0) return;
             
-            // Get paradigms that are due for review using spaced repetition
             const dueParadigms = getDueParadigms(filteredParadigms);
             
             let selectedParadigm;
             if (dueParadigms.length > 0) {
-                // Select from due paradigms, prioritizing those with lower ease factors
                 const sortedDue = dueParadigms.sort((a, b) => a.easeFactor - b.easeFactor);
                 selectedParadigm = sortedDue[0];
             } else {
-                // If no paradigms are due, pick randomly from filtered set
-                selectedParadigm = filteredParadigms[Math.floor(Math.random() * filteredParadigms.length)];
+                const currentFilteredIndex = filteredParadigms.findIndex(p => p.id === paradigms[currentParadigmIndex]?.id);
+                const nextFilteredIndex = (currentFilteredIndex + 1) % filteredParadigms.length;
+                selectedParadigm = filteredParadigms[nextFilteredIndex];
             }
             
-            // Find index in the original paradigms array
             currentParadigmIndex = paradigms.findIndex(p => p.id === selectedParadigm.id);
             
             document.getElementById('paradigm-word').textContent = selectedParadigm.greek;
             document.getElementById('paradigm-hint').textContent = selectedParadigm.english;
-            
-            // Hide the English hint initially
             document.getElementById('paradigm-hint').style.display = 'none';
             
-            // Set up question and answers based on paradigm type
             setupParadigmQuestion(selectedParadigm);
             
-            // Reset answer buttons
             document.querySelectorAll('.answer-btn').forEach(btn => {
                 btn.classList.remove('correct', 'incorrect');
                 btn.disabled = false;
@@ -1442,6 +1206,9 @@
         function getDueParadigms(paradigmSet) {
             const now = Date.now();
             return paradigmSet.filter(paradigm => {
+                if (paradigm.lastReviewed === 0) {
+                    return true;
+                }
                 const timeSinceReview = now - paradigm.lastReviewed;
                 const intervalMs = paradigm.interval * 24 * 60 * 60 * 1000;
                 return timeSinceReview >= intervalMs;
@@ -1472,16 +1239,6 @@
                     <button class="answer-btn" onclick="selectAnswer('2nd plural')">you are (pl.)</button>
                     <button class="answer-btn" onclick="selectAnswer('3rd plural')">they are</button>
                 `;
-            } else if (paradigm.category === 'pronouns') {
-                questionEl.textContent = 'Identify Case & Person';
-                answersEl.innerHTML = `
-                    <button class="answer-btn" onclick="selectAnswer('nominative 1st')">nom. 1st</button>
-                    <button class="answer-btn" onclick="selectAnswer('genitive 1st')">gen. 1st</button>
-                    <button class="answer-btn" onclick="selectAnswer('dative 1st')">dat. 1st</button>
-                    <button class="answer-btn" onclick="selectAnswer('accusative 1st')">acc. 1st</button>
-                    <button class="answer-btn" onclick="selectAnswer('nominative 2nd')">nom. 2nd</button>
-                    <button class="answer-btn" onclick="selectAnswer('accusative 2nd')">acc. 2nd</button>
-                `;
             } else if (paradigm.category === 'present_active' || paradigm.category === 'present_mediopassive') {
                 questionEl.textContent = 'Identify Person & Number';
                 answersEl.innerHTML = `
@@ -1492,16 +1249,6 @@
                     <button class="answer-btn" onclick="selectAnswer('2nd plural')">2nd plur.</button>
                     <button class="answer-btn" onclick="selectAnswer('3rd plural')">3rd plur.</button>
                 `;
-            } else if (paradigm.category === 'deponent_verbs') {
-                questionEl.textContent = 'Identify Person & Number';
-                answersEl.innerHTML = `
-                    <button class="answer-btn" onclick="selectAnswer('1st singular')">I (1st sg.)</button>
-                    <button class="answer-btn" onclick="selectAnswer('2nd singular')">you (2nd sg.)</button>
-                    <button class="answer-btn" onclick="selectAnswer('3rd singular')">he/she/it (3rd sg.)</button>
-                    <button class="answer-btn" onclick="selectAnswer('1st plural')">we (1st pl.)</button>
-                    <button class="answer-btn" onclick="selectAnswer('2nd plural')">you (2nd pl.)</button>
-                    <button class="answer-btn" onclick="selectAnswer('3rd plural')">they (3rd pl.)</button>
-                `;
             }
         }
 
@@ -1510,22 +1257,16 @@
             const buttons = document.querySelectorAll('.answer-btn');
             let correctAnswer = '';
             
-            // Determine correct answer based on paradigm type
             if (paradigm.category === 'articles') {
                 correctAnswer = `${paradigm.case} ${paradigm.gender}`;
-            } else if (paradigm.category === 'pronouns') {
-                correctAnswer = `${paradigm.case} ${paradigm.person}`;
-            } else if (paradigm.category === 'to_be_verbs' || paradigm.category === 'present_active' || paradigm.category === 'present_mediopassive' || paradigm.category === 'deponent_verbs') {
+            } else if (paradigm.category === 'to_be_verbs' || paradigm.category === 'present_active' || paradigm.category === 'present_mediopassive') {
                 correctAnswer = `${paradigm.person} ${paradigm.number}`;
             }
             
-            // Show the English hint now that they've made a choice
             document.getElementById('paradigm-hint').style.display = 'block';
             
-            // Disable all buttons after selection
             buttons.forEach(btn => btn.disabled = true);
             
-            // Find and highlight the correct and selected buttons
             buttons.forEach(btn => {
                 const buttonAnswer = btn.onclick.toString().match(/'([^']+)'/)[1];
                 
@@ -1536,7 +1277,6 @@
                 }
             });
             
-            // Update stats
             const isCorrect = selectedAnswer === correctAnswer;
             const category = paradigm.category || 'other_paradigms';
             
@@ -1551,319 +1291,91 @@
             sessionStats.total++;
             categoryStats[category].total++;
             
-            // Update spaced repetition for paradigms
             updateSpacedRepetition(paradigm, isCorrect ? 4 : 1);
             
             updateStats();
             updatePerformanceDashboard();
-            checkForRecommendations();
             saveData();
         }
 
-        // Text-to-speech with Erasmian pronunciation mapping
+        function updateSpacedRepetition(word, quality) {
+            const now = Date.now();
+            word.lastReviewed = now;
+            
+            if (quality >= 3) {
+                if (word.interval === 1) {
+                    word.interval = 6;
+                } else {
+                    word.interval = Math.round(word.interval * word.easeFactor);
+                }
+                word.easeFactor = word.easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+            } else {
+                word.interval = 1;
+                word.easeFactor = Math.max(1.3, word.easeFactor - 0.2);
+            }
+            
+            word.easeFactor = Math.max(1.3, Math.min(2.5, word.easeFactor));
+        }
+
+        function revealAnswer() {
+            document.getElementById('english-hint').style.display = 'block';
+            document.getElementById('reveal-btn').classList.add('hidden');
+            document.getElementById('know-btn').classList.remove('hidden');
+            document.getElementById('dont-know-btn').classList.remove('hidden');
+        }
+
+        function markCorrect() {
+            if (vocabulary.length === 0) return;
+            
+            const word = vocabulary[currentWordIndex];
+            word.correct++;
+            word.attempts++;
+            updateSpacedRepetition(word, 4);
+            
+            sessionStats.correct++;
+            sessionStats.total++;
+            categoryStats.vocabulary.correct++;
+            categoryStats.vocabulary.total++;
+            
+            document.getElementById('know-btn').classList.add('hidden');
+            document.getElementById('dont-know-btn').classList.add('hidden');
+            document.getElementById('next-btn').classList.remove('hidden');
+            
+            saveData();
+        }
+
+        function markIncorrect() {
+            if (vocabulary.length === 0) return;
+            
+            const word = vocabulary[currentWordIndex];
+            word.attempts++;
+            updateSpacedRepetition(word, 1);
+            
+            sessionStats.incorrect++;
+            sessionStats.total++;
+            categoryStats.vocabulary.total++;
+            
+            document.getElementById('know-btn').classList.add('hidden');
+            document.getElementById('dont-know-btn').classList.add('hidden');
+            document.getElementById('next-btn').classList.remove('hidden');
+            
+            saveData();
+        }
+
         function speakGreek() {
             const text = currentMode === 'vocab' 
                 ? document.getElementById('greek-word').textContent
                 : document.getElementById('paradigm-word').textContent;
             
-            const erasmianText = convertToErasmian(text);
-            
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(erasmianText);
-                
-                // Try to use English with modified Greek text for more Erasmian-like pronunciation
+                const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
                 utterance.rate = 0.7;
                 utterance.pitch = 0.9;
-                
                 speechSynthesis.speak(utterance);
             }
         }
 
-        function convertToErasmian(greekText) {
-            // Basic Erasmian pronunciation mapping
-            let erasmian = greekText
-                // Vowels
-                .replace(/α/g, 'ah')
-                .replace(/ε/g, 'eh')
-                .replace(/η/g, 'ay')
-                .replace(/ι/g, 'ee')
-                .replace(/ο/g, 'oh')
-                .replace(/υ/g, 'oo')
-                .replace(/ω/g, 'oh')
-                
-                // Diphthongs
-                .replace(/αι/g, 'eye')
-                .replace(/ει/g, 'ay')
-                .replace(/οι/g, 'oy')
-                .replace(/υι/g, 'wee')
-                .replace(/αυ/g, 'ow')
-                .replace(/ευ/g, 'eh-oo')
-                .replace(/ηυ/g, 'ay-oo')
-                
-                // Consonants
-                .replace(/β/g, 'b')
-                .replace(/γ/g, 'g')
-                .replace(/δ/g, 'd')
-                .replace(/ζ/g, 'z')
-                .replace(/θ/g, 'th')
-                .replace(/κ/g, 'k')
-                .replace(/λ/g, 'l')
-                .replace(/μ/g, 'm')
-                .replace(/ν/g, 'n')
-                .replace(/ξ/g, 'ks')
-                .replace(/π/g, 'p')
-                .replace(/ρ/g, 'r')
-                .replace(/σ/g, 's')
-                .replace(/ς/g, 's')
-                .replace(/τ/g, 't')
-                .replace(/φ/g, 'f')
-                .replace(/χ/g, 'kh')
-                .replace(/ψ/g, 'ps')
-                
-                // Handle rough/smooth breathing and accents (basic removal for TTS)
-                .replace(/[ἀἁἂἃἄἅἆἇὰάᾶᾳᾀᾁᾂᾃᾄᾅᾆᾇᾰᾱ]/g, 'ah')
-                .replace(/[ἐἑἒἓἔἕὲέ]/g, 'eh')
-                .replace(/[ἠἡἢἣἤἥἦἧὴήῆῃᾐᾑᾒᾓᾔᾕᾖᾗ]/g, 'ay')
-                .replace(/[ἰἱἲἳἴἵἶἷὶίῖ]/g, 'ee')
-                .replace(/[ὀὁὂὃὄὅὸό]/g, 'oh')
-                .replace(/[ὐὑὒὓὔὕὖὗὺύῦ]/g, 'oo')
-                .replace(/[ὠὡὢὣὤὥὦὧὼώῶῳᾠᾡᾢᾣᾤᾥᾦᾧ]/g, 'oh');
-                
-            return erasmian;
-        }
-
-        // Smart word type detection
-        function smartDetectWordType() {
-            const greekWord = document.getElementById('greek-input').value.trim();
-            const typeInput = document.getElementById('type-input');
-            const declensionInput = document.getElementById('declension-input');
-            const autoDetected = document.getElementById('auto-detected');
-            const autoDetectedDecl = document.getElementById('auto-detected-decl');
-            
-            if (!greekWord) {
-                autoDetected.textContent = '';
-                autoDetectedDecl.textContent = '';
-                return;
-            }
-            
-            // Check against known vocabulary first
-            const knownWord = findKnownWord(greekWord);
-            if (knownWord) {
-                typeInput.value = knownWord.type;
-                if (knownWord.declension) {
-                    declensionInput.value = knownWord.declension;
-                    autoDetectedDecl.textContent = `(detected: ${knownWord.declension})`;
-                }
-                autoDetected.textContent = `(known word: ${knownWord.type})`;
-                return;
-            }
-            
-            // Pattern-based detection
-            const detected = detectWordTypeByPattern(greekWord);
-            if (detected.type) {
-                typeInput.value = detected.type;
-                autoDetected.textContent = `(detected: ${detected.type})`;
-                
-                if (detected.declension) {
-                    declensionInput.value = detected.declension;
-                    autoDetectedDecl.textContent = `(detected: ${detected.declension})`;
-                } else {
-                    autoDetectedDecl.textContent = '';
-                }
-            } else {
-                autoDetected.textContent = '';
-                autoDetectedDecl.textContent = '';
-            }
-        }
-
-        function findKnownWord(greekWord) {
-            // Check vocabulary
-            const vocabMatch = vocabulary.find(word => 
-                word.greek === greekWord || 
-                word.greek.includes(greekWord) ||
-                greekWord.includes(word.greek)
-            );
-            
-            if (vocabMatch) return vocabMatch;
-            
-            // Check paradigms  
-            const paradigmMatch = paradigms.find(form => form.greek === greekWord);
-            if (paradigmMatch) return {type: paradigmMatch.type, declension: null};
-            
-            return null;
-        }
-
-        function detectWordTypeByPattern(word) {
-            // Remove accents and breathing marks for pattern matching
-            const cleanWord = word.replace(/[άὰᾶἀἁἂἃἄἅἆἇᾀᾁᾂᾃᾄᾅᾆᾇᾰᾱ]/g, 'α')
-                                 .replace(/[έὲἐἑἒἓἔἕ]/g, 'ε')
-                                 .replace(/[ήὴῆἠἡἢἣἤἥἦἧῃᾐᾑᾒᾓᾔᾕᾖᾗ]/g, 'η')
-                                 .replace(/[ίὶῖἰἱἲἳἴἵἶἷ]/g, 'ι')
-                                 .replace(/[όὸὀὁὂὃὄὅ]/g, 'ο')
-                                 .replace(/[ύὺῦὐὑὒὓὔὕὖὗ]/g, 'υ')
-                                 .replace(/[ώὼῶὠὡὢὣὤὥὦὧῳᾠᾡᾢᾣᾤᾥᾦᾧ]/g, 'ω');
-            
-            // Verb patterns
-            if (cleanWord.endsWith('ω') || cleanWord.endsWith('ομαι')) {
-                if (cleanWord.endsWith('ομαι')) {
-                    return {type: 'deponent_verb', declension: null};
-                }
-                return {type: 'verb', declension: null};
-            }
-            
-            // Noun patterns - 2nd declension
-            if (cleanWord.endsWith('ος')) {
-                return {type: 'noun', declension: '2nd'};
-            }
-            
-            if (cleanWord.endsWith('ον')) {
-                return {type: 'noun', declension: '2nd'};
-            }
-            
-            // Noun patterns - 1st declension  
-            if (cleanWord.endsWith('η') || cleanWord.endsWith('ης')) {
-                return {type: 'noun', declension: '1st'};
-            }
-            
-            if (cleanWord.endsWith('α') || cleanWord.endsWith('ας')) {
-                return {type: 'noun', declension: '1st'};
-            }
-            
-            // Preposition patterns (known prepositions)
-            const knownPrepositions = ['προς', 'εν', 'εις', 'απο', 'ενωπιον', 'μετα', 'υπο', 'επι', 'παρα', 'περι', 'συν', 'κατα', 'ανα', 'δια'];
-            if (knownPrepositions.includes(cleanWord)) {
-                return {type: 'preposition', declension: null};
-            }
-            
-            // Conjunction patterns
-            if (['και', 'δε', 'αλλα', 'η', 'ουδε', 'μηδε'].includes(cleanWord)) {
-                return {type: 'conjunction', declension: null};
-            }
-            
-            // Adverb patterns  
-            if (cleanWord.endsWith('ως') || ['νυν', 'ετι', 'εκει', 'ωδε', 'παντοτε', 'παλιν', 'τοτε'].includes(cleanWord)) {
-                return {type: 'adverb', declension: null};
-            }
-            
-            // Proper nouns (capitalized, common names)
-            if (['ιησους', 'ιησου', 'ιησουν', 'ιουδαια', 'γαλιλαια', 'ισραηλ'].includes(cleanWord.toLowerCase())) {
-                return {type: 'proper_noun', declension: null};
-            }
-            
-            // Default fallback
-            return {type: null, declension: null};
-        }
-
-        function uploadLessonDocument() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.pdf,.txt,.md';
-            input.onchange = function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const content = e.target.result;
-                        parseLessonDocument(content, file.name);
-                    };
-                    
-                    if (file.type === 'application/pdf') {
-                        alert('PDF parsing requires additional setup. For now, please copy the vocabulary tables into a text file and upload that instead. I can help you format it correctly!');
-                        return;
-                    }
-                    
-                    reader.readAsText(file);
-                }
-            };
-            input.click();
-        }
-
-        function parseLessonDocument(content, filename) {
-            try {
-                const parsedVocab = extractVocabularyFromText(content);
-                if (parsedVocab.length > 0) {
-                    // Add parsed vocabulary
-                    parsedVocab.forEach(word => {
-                        const newWord = {
-                            id: Date.now() + Math.random(),
-                            greek: word.greek,
-                            english: word.english,
-                            type: word.type,
-                            declension: word.declension,
-                            correct: 0,
-                            attempts: 0,
-                            lastReviewed: 0,
-                            interval: 1,
-                            easeFactor: 2.5
-                        };
-                        vocabulary.push(newWord);
-                    });
-                    
-                    saveData();
-                    displayVocabList();
-                    updatePerformanceDashboard();
-                    
-                    alert(`Successfully imported ${parsedVocab.length} words from ${filename}!`);
-                } else {
-                    alert('No vocabulary found. Make sure the text contains vocabulary tables with Greek words and English translations.');
-                }
-            } catch (error) {
-                alert('Error parsing document. Please check the format and try again.');
-                console.error('Parse error:', error);
-            }
-        }
-
-        function extractVocabularyFromText(text) {
-            const words = [];
-            const lines = text.split('\n');
-            
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-                
-                // Look for vocabulary table patterns
-                // Pattern 1: "1 ὁ ἄνθρωπος human being Noun ἀνθρώπου"
-                const tableMatch = line.match(/^\d+\s+(.+?)\s+(.+?)\s+(Noun|Verb|Adj|Adverb|Prep|Conj|Interjection|Num)\s/);
-                if (tableMatch) {
-                    const greek = tableMatch[1].trim();
-                    const english = tableMatch[2].trim();
-                    const category = tableMatch[3].toLowerCase();
-                    
-                    const detected = detectWordTypeByPattern(greek);
-                    words.push({
-                        greek: greek,
-                        english: english,
-                        type: category === 'noun' ? 'noun' : 
-                              category === 'verb' ? 'verb' :
-                              category === 'adj' ? 'adjective' :
-                              category === 'prep' ? 'preposition' :
-                              category === 'conj' ? 'conjunction' :
-                              category === 'num' ? 'number' :
-                              detected.type || 'noun',
-                        declension: detected.declension
-                    });
-                }
-                
-                // Pattern 2: Simple format "Greek word - English meaning"
-                const simpleMatch = line.match(/^([α-ωΑ-Ω\s\(\)άέήίόύώἀ-῾]+)\s*[-–]\s*(.+)$/);
-                if (simpleMatch && !tableMatch) {
-                    const greek = simpleMatch[1].trim();
-                    const english = simpleMatch[2].trim();
-                    const detected = detectWordTypeByPattern(greek);
-                    
-                    words.push({
-                        greek: greek,
-                        english: english,
-                        type: detected.type || 'noun',
-                        declension: detected.declension
-                    });
-                }
-            }
-            
-            return words;
-        }
-
-        // Vocabulary management
         function addVocab() {
             const greek = document.getElementById('greek-input').value.trim();
             const english = document.getElementById('english-input').value.trim();
@@ -1887,9 +1399,7 @@
                 vocabulary.push(newWord);
                 saveData();
                 displayVocabList();
-                updatePerformanceDashboard();
                 
-                // Clear inputs
                 document.getElementById('greek-input').value = '';
                 document.getElementById('english-input').value = '';
             }
@@ -1909,6 +1419,10 @@
                     <button class="delete-btn" onclick="deleteVocab(${word.id})">Delete</button>
                 </div>`
             ).join('');
+        }
+
+        function smartDetectWordType() {
+            // Simple implementation
         }
 
         function importVocab() {
@@ -1947,7 +1461,10 @@
             input.click();
         }
 
-        // Performance dashboard
+        function uploadLessonDocument() {
+            alert('Feature coming soon! For now, use the Add Words form or Import CSV.');
+        }
+
         function updatePerformanceDashboard() {
             const totalAttempted = sessionStats.total;
             const accuracyRate = totalAttempted > 0 ? Math.round((sessionStats.correct / totalAttempted) * 100) : 0;
@@ -1957,7 +1474,6 @@
             document.getElementById('accuracy-rate').textContent = accuracyRate + '%';
             document.getElementById('words-due').textContent = wordsDue;
             
-            // Update category stats
             const categoryStatsEl = document.getElementById('category-stats');
             let categoryHtml = '';
             
@@ -1983,7 +1499,6 @@
             }
             categoryStatsEl.innerHTML = categoryHtml;
             
-            // Update recent mistakes
             updateRecentMistakes();
         }
 
@@ -1991,7 +1506,6 @@
             const mistakeList = document.getElementById('mistake-list');
             const recentMistakes = [];
             
-            // Check vocabulary mistakes
             vocabulary.forEach(word => {
                 if (word.attempts > 0 && word.correct / word.attempts < 0.7) {
                     recentMistakes.push({
@@ -2003,7 +1517,6 @@
                 }
             });
             
-            // Check paradigm mistakes
             paradigms.forEach(paradigm => {
                 if (paradigm.attempts > 0 && paradigm.correct / paradigm.attempts < 0.7) {
                     recentMistakes.push({
@@ -2015,7 +1528,6 @@
                 }
             });
             
-            // Sort by lowest accuracy
             recentMistakes.sort((a, b) => a.accuracy - b.accuracy);
             
             if (recentMistakes.length > 0) {
@@ -2030,13 +1542,11 @@
             }
         }
 
-        // Statistics and data management
         function updateStats() {
             document.getElementById('remaining-count').textContent = vocabulary.length;
             document.getElementById('correct-score').textContent = sessionStats.correct;
             document.getElementById('incorrect-score').textContent = sessionStats.incorrect;
             
-            // Calculate comprehension score
             const percentage = sessionStats.total > 0 
                 ? Math.round((sessionStats.correct / sessionStats.total) * 100)
                 : 0;
@@ -2051,7 +1561,6 @@
             }
         }
 
-        // Study recommendations system
         function checkForRecommendations() {
             // Show recommendations after every 10 questions
             if (sessionStats.total > 0 && sessionStats.total % 10 === 0) {
@@ -2060,94 +1569,13 @@
         }
 
         function showRecommendations() {
-            const recommendations = generateRecommendations();
-            const recommendationsDiv = document.getElementById('study-recommendations');
-            const listDiv = document.getElementById('recommendations-list');
-            
-            if (recommendations.length > 0) {
-                listDiv.innerHTML = recommendations.map(rec => 
-                    `<div class="recommendation-item">
-                        <h4>${rec.title} ${rec.isWeak ? '<span class="weakness-indicator">Needs Work</span>' : '<span class="strength-indicator">Strong</span>'}</h4>
-                        <p>${rec.description}</p>
-                    </div>`
-                ).join('');
-                
-                recommendationsDiv.classList.remove('hidden');
-            }
+            // Implementation for recommendations
         }
 
         function hideRecommendations() {
             document.getElementById('study-recommendations').classList.add('hidden');
         }
 
-        function generateRecommendations() {
-            const recommendations = [];
-            const categories = {
-                'articles': 'Articles/Forms',
-                'to_be_verbs': 'To Be Verbs (εἰμί)',
-                'pronouns': 'Pronouns',
-                'present_active': 'Present Active Indicative',
-                'present_mediopassive': 'Present Medio-Passive',
-                'deponent_verbs': 'Deponent Verbs',
-                'other_paradigms': 'Other Paradigms',
-                'vocabulary': 'Vocabulary'
-            };
-
-            for (const [key, name] of Object.entries(categories)) {
-                const stats = categoryStats[key];
-                if (stats.total > 0) {
-                    const percentage = Math.round((stats.correct / stats.total) * 100);
-                    const isWeak = percentage < 70;
-                    
-                    let description = '';
-                    if (key === 'articles') {
-                        description = isWeak ? 
-                            `You're struggling with article forms (${percentage}% correct). Focus on masculine/feminine/neuter patterns.` :
-                            `Great work with articles! You're getting ${percentage}% correct.`;
-                    } else if (key === 'to_be_verbs') {
-                        description = isWeak ? 
-                            `The verb εἰμί needs practice (${percentage}% correct). Review person and number endings.` :
-                            `Excellent grasp of εἰμί forms! ${percentage}% accuracy.`;
-                    } else if (key === 'pronouns') {
-                        description = isWeak ? 
-                            `Pronoun cases need attention (${percentage}% correct). Practice nominative vs accusative patterns.` :
-                            `Strong pronoun knowledge! ${percentage}% correct.`;
-                    } else if (key === 'present_active') {
-                        description = isWeak ? 
-                            `Present active forms need work (${percentage}% correct). Review person/number endings.` :
-                            `Solid present active knowledge! ${percentage}% correct.`;
-                    } else if (key === 'present_mediopassive') {
-                        description = isWeak ? 
-                            `Present medio-passive forms need practice (${percentage}% correct). Focus on the new endings.` :
-                            `Great progress with medio-passive! ${percentage}% correct.`;
-                    } else if (key === 'vocabulary') {
-                        description = isWeak ? 
-                            `Vocabulary recognition could improve (${percentage}% correct). Review your word list more frequently.` :
-                            `Vocabulary is solid! ${percentage}% recognition rate.`;
-                    } else {
-                        description = isWeak ? 
-                            `This area needs work (${percentage}% correct). Spend more time with these paradigms.` :
-                            `Good progress in this area! ${percentage}% correct.`;
-                    }
-                    
-                    recommendations.push({
-                        title: name,
-                        description: description,
-                        isWeak: isWeak,
-                        percentage: percentage
-                    });
-                }
-            }
-            
-            // Sort by weakest first
-            return recommendations.sort((a, b) => {
-                if (a.isWeak && !b.isWeak) return -1;
-                if (!a.isWeak && b.isWeak) return 1;
-                return a.percentage - b.percentage;
-            });
-        }
-
-        // Memory management functions for UI
         function saveDataManually() {
             updateSaveStatus('saving', 'Saving...');
             
@@ -2195,7 +1623,6 @@
                         try {
                             const importData = JSON.parse(e.target.result);
                             
-                            // Validate import data
                             if (importData.vocabulary && importData.paradigms) {
                                 vocabulary = importData.vocabulary;
                                 paradigms = importData.paradigms;
@@ -2203,13 +1630,9 @@
                                 categoryStats = importData.categoryStats || categoryStats;
                                 appState = {...appState, ...(importData.appState || {})};
                                 
-                                // Validate and repair imported data
                                 validateAndRepairData();
-                                
-                                // Save imported data
                                 saveData();
                                 
-                                // Refresh display
                                 updateDisplay();
                                 updateStats();
                                 updatePerformanceDashboard();
@@ -2279,13 +1702,72 @@
                 }
                 
                 keysToRemove.forEach(key => localStorage.removeItem(key));
-                
-                // Reset to defaults - reload the page to reinitialize
                 location.reload();
             }
         }
 
-        // Initialize when page loads
+        function updateSaveStatus(type, message) {
+            const statusDot = document.querySelector('.status-dot');
+            const statusText = document.getElementById('save-status-text');
+            
+            if (statusDot && statusText) {
+                statusDot.className = 'status-dot';
+                
+                switch(type) {
+                    case 'saving':
+                        statusDot.classList.add('saving');
+                        break;
+                    case 'error':
+                        statusDot.classList.add('error');
+                        break;
+                    case 'success':
+                        break;
+                    case 'auto':
+                        break;
+                }
+                
+                statusText.textContent = message;
+                
+                if (type === 'success') {
+                    setTimeout(() => {
+                        updateSaveStatus('auto', 'Auto-save enabled');
+                    }, 2000);
+                }
+            }
+        }
+
+        function restoreUIState() {
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            const modeBtn = document.querySelector(`[onclick*="${currentMode}"]`);
+            if (modeBtn) modeBtn.classList.add('active');
+            
+            if (currentMode === 'paradigm') {
+                document.querySelectorAll('.paradigm-type-btn').forEach(btn => btn.classList.remove('active'));
+                const paradigmBtn = document.querySelector(`[onclick*="${selectedParadigmType}"]`);
+                if (paradigmBtn) paradigmBtn.classList.add('active');
+            }
+            
+            document.getElementById('vocab-mode').classList.toggle('hidden', currentMode !== 'vocab');
+            document.getElementById('paradigm-mode').classList.toggle('hidden', currentMode !== 'paradigm');
+            document.getElementById('paradigm-selector').classList.toggle('hidden', currentMode !== 'paradigm');
+            document.getElementById('input-mode').classList.toggle('hidden', currentMode !== 'input');
+        }
+
+        function init() {
+            console.log('🚀 Initializing Greek NT Learning App...');
+            
+            loadData();
+            validateAndRepairData();
+            startAutoSave();
+            restoreUIState();
+            updateDisplay();
+            updateStats();
+            updatePerformanceDashboard();
+            refreshStorageInfo();
+            
+            console.log('✅ App initialized successfully');
+        }
+
         window.onload = function() {
             init();
         };
