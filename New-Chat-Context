@@ -1,0 +1,246 @@
+# Greek NT Learning App - Project Context Document
+
+## For AI Assistants - READ THIS FIRST
+
+This document provides complete context for continuing development of the Greek NT Learning App project. The user (caebaby) is not a coder - provide step-by-step instructions and complete file replacements, not code snippets.
+
+## Project Overview
+
+**What it is:** A web-based Greek New Testament learning application with spaced repetition, vocabulary practice, and paradigm training.
+
+**Current Status:** ✅ FULLY FUNCTIONAL AND DEPLOYED
+- **Live URL:** Available on Railway (user has working deployment)
+- **Memory System:** Complete with auto-save, backup/restore
+- **Spaced Repetition:** Working SuperMemo 2 algorithm
+- **Progress Tracking:** Full analytics and performance dashboard
+
+## Technical Architecture
+
+### Current Stack:
+- **Frontend:** Single HTML file with embedded CSS/JavaScript
+- **Backend:** Python static file server (`main.py`)
+- **Deployment:** Railway with Python + Procfile pattern
+- **Storage:** Browser localStorage (enhanced with auto-save)
+- **Database:** None (planned: Supabase for cloud sync)
+
+### File Structure:
+```
+greek-nt-learning-app/
+├── index.html          # Complete app (HTML + CSS + JS)
+├── main.py             # Python static file server
+├── Procfile            # Railway start command: "web: python main.py"
+├── requirements.txt    # Empty file (no Python dependencies)
+├── README.md           # Documentation
+└── RAILWAY_DEPLOYMENT_GUIDE.md  # Deployment troubleshooting
+```
+
+### Deployment Pattern (CRITICAL):
+- **Working Pattern:** Python + Procfile (copied from market-research-langraph)
+- **Railway Command:** `web: python main.py`
+- **Host Binding:** `0.0.0.0` and `$PORT` (never localhost)
+- **Domain Generation:** Must click "Generate Domain" in Railway settings
+
+## Key Features Implemented
+
+### 1. Vocabulary Practice
+- 30+ Greek words from Biblingo lessons 1-8
+- Active recall methodology (see word → recall meaning → reveal)
+- Smart word type detection and declension classification
+
+### 2. Paradigm Practice  
+- Present Active & Medio-Passive Indicative
+- Articles (ὁ, τοῦ, τῷ, τόν)
+- εἰμί (to be) verb forms
+- Multiple choice questions with immediate feedback
+
+### 3. Spaced Repetition System
+- **Algorithm:** SuperMemo 2 implementation
+- **Key Fix:** Items with `lastReviewed: 0` are due for review
+- **Cycling Logic:** Systematic progression when no items due
+- **Ease Factor:** Adjusts based on performance (1.3-2.5 range)
+
+### 4. Memory Management
+- **Auto-save:** Every 30 seconds + on tab switch + before close
+- **Data Persistence:** All progress, settings, and session state
+- **Backup/Restore:** JSON export/import functionality
+- **Storage Monitoring:** Real-time storage stats and last-saved time
+
+### 5. Analytics Dashboard
+- **Performance Tracking:** Accuracy rates by category
+- **Problem Identification:** Shows words/paradigms with <70% accuracy
+- **Session Stats:** Running totals of correct/incorrect answers
+- **Due Items Counter:** Shows items ready for review
+
+## Recent Major Fixes
+
+### Memory System (RESOLVED ✅)
+**Problem:** Progress lost on browser refresh
+**Solution:** Enhanced localStorage with auto-save and state restoration
+**Files Changed:** Complete `index.html` rewrite with memory management
+
+### Spaced Repetition (RESOLVED ✅)  
+**Problem:** Cycling through same items repeatedly
+**Solution:** Fixed `getDueWords()` and `getDueParadigms()` functions
+**Key Fix:** `if (word.lastReviewed === 0) return true;`
+
+### Railway Deployment (RESOLVED ✅)
+**Problem:** Health check failures and conflicting deployment files
+**Solution:** Used Python + Procfile pattern from working market-research-langraph
+**Key Learning:** Always use `0.0.0.0:$PORT` binding, never localhost
+
+## Current Data Structure
+
+### Vocabulary Items:
+```javascript
+{
+  id: 1,
+  greek: "ὁ ἄνθρωπος", 
+  english: "human being",
+  type: "noun",
+  declension: "2nd",
+  correct: 0,
+  attempts: 0,
+  lastReviewed: 0,
+  interval: 1,
+  easeFactor: 2.5
+}
+```
+
+### Paradigm Items:
+```javascript
+{
+  id: 1,
+  greek: "λύω",
+  english: "I am loosing", 
+  person: "1st",
+  number: "singular",
+  type: "present_active",
+  category: "present_active",
+  correct: 0,
+  attempts: 0,
+  lastReviewed: 0,
+  interval: 1,
+  easeFactor: 2.5
+}
+```
+
+## Next Development Priorities
+
+### 1. Database Integration (Planned)
+- **Goal:** Cross-device sync and cloud backup
+- **Technology:** Supabase (PostgreSQL)
+- **Timeline:** 15-30 minutes implementation
+- **Benefits:** Never lose progress, multi-device access
+
+### 2. Content Expansion
+- **Lesson 2+ vocabulary** from Biblingo curriculum
+- **Additional paradigms** (future tenses, more cases)
+- **Pronunciation guides** (enhanced TTS with better Greek)
+
+### 3. User Experience
+- **Custom domain** (optional, requires domain purchase)
+- **Mobile app** (Progressive Web App features)
+- **Offline mode** (enhanced service worker)
+
+## Important Implementation Notes
+
+### For Non-Coders:
+- **Always provide complete files** - never ask user to "replace snippets"
+- **Test locally first** - HTML files can be opened in browser
+- **Use Railway deployment guide** - follow exact pattern from working project
+- **Backup before changes** - export progress first
+
+### Railway Deployment Rules:
+1. **One deployment pattern only** - don't mix Node.js + Python configs
+2. **Procfile is required** - tells Railway how to start the app  
+3. **Correct host binding** - always `0.0.0.0` and `$PORT`
+4. **Generate domain** - don't guess URL, use Railway's generator
+5. **Check logs first** - "Deployments" tab shows real errors
+
+### Code Quality Standards:
+- **Single file approach** - keep everything in `index.html`
+- **Mobile-first design** - responsive CSS with breakpoints
+- **Progressive enhancement** - works without JavaScript for basics
+- **Data validation** - handle corrupted localStorage gracefully
+
+## Troubleshooting Common Issues
+
+### "App not cycling through vocabulary"
+- **Cause:** Spaced repetition logic showing only "due" items
+- **Fix:** Check `getDueWords()` function handles `lastReviewed: 0`
+- **Test:** Fresh browser session should show different words
+
+### "Progress not saving"
+- **Cause:** localStorage errors or quota exceeded
+- **Fix:** Check browser console, verify auto-save status indicator
+- **Test:** Refresh page, progress should restore
+
+### "Railway deployment failing"
+- **Cause:** Wrong deployment pattern or host binding
+- **Fix:** Use Python + Procfile pattern, check RAILWAY_DEPLOYMENT_GUIDE.md
+- **Test:** Health check should pass, domain should be accessible
+
+### "Functions not defined" errors
+- **Cause:** JavaScript truncated or syntax errors
+- **Fix:** Ensure complete `index.html` file, check browser console
+- **Test:** All buttons should work without console errors
+
+## Integration with Larger Vision
+
+### Agentic Business Context:
+This Greek app is part of caebaby's larger vision for AI-powered business automation. Lessons learned here apply to:
+
+- **Content creation agents** - Systematic learning content generation
+- **User experience optimization** - Memory systems and progress tracking  
+- **Deployment automation** - Railway patterns for rapid prototyping
+- **Data persistence** - Local-first with cloud sync strategies
+
+### Framework for Future Apps:
+- **Single-file deployments** for rapid prototyping
+- **Progressive enhancement** from localStorage to cloud
+- **Educational technology** patterns and spaced repetition algorithms
+- **Mobile-first learning** applications
+
+## Contact Patterns
+
+### When User Needs Help:
+1. **Always ask to see current files** - understand what they have
+2. **Provide complete replacements** - never partial edits
+3. **Test instructions locally** - assume they'll open HTML in browser first
+4. **Use Railway deployment guide** - reference existing working patterns
+5. **Save progress first** - export before major changes
+
+### Decision Making:
+- **User is not technical** - explain in business terms, not code terms
+- **Prioritize working over perfect** - ship quickly, iterate based on use
+- **Mobile experience matters** - user studies on phone frequently
+- **Data loss is unacceptable** - always preserve user progress
+
+## Success Metrics
+
+### Current Achievements:
+✅ **Fully functional spaced repetition** - all 30 vocabulary words cycling properly  
+✅ **Complete memory persistence** - progress survives browser sessions  
+✅ **Live deployment on Railway** - accessible via public URL  
+✅ **Mobile-optimized interface** - works well on phones/tablets  
+✅ **Analytics and progress tracking** - detailed performance insights  
+✅ **Backup/restore system** - user can export/import progress  
+
+### Future Success Criteria:
+- **Cross-device sync** - same progress on phone and computer
+- **Extended curriculum** - 100+ vocabulary words, more paradigms
+- **User adoption** - real students using for NT Greek learning
+- **Template for other apps** - reusable patterns for educational tools
+
+---
+
+## Quick Start for New AI Assistant
+
+1. **Understand current state:** App is working and deployed on Railway
+2. **Check what user needs:** Usually feature additions or bug fixes
+3. **Always provide complete files:** Don't ask for snippet replacements
+4. **Test locally first:** HTML files work in browser before deployment
+5. **Use existing deployment pattern:** Python + Procfile works perfectly
+6. **Preserve user data:** Export progress before major changes
+
+**Most important:** This is a working production app with real user data. Be careful with changes and always preserve progress.
